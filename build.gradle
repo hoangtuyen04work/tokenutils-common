@@ -36,7 +36,7 @@ publishing {
 		mavenJava(MavenPublication) {
 			groupId = 'com.utils'
 			artifactId = 'token-utils' // Unique name for your JAR
-			version = '0.0.1-SNAPSHOT'
+			version = '0.0.2-SNAPSHOT'
 			from components.java // Publishes the compiled Java classes
 
 			// Optional: Customize the POM metadata
