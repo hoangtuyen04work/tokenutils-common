@@ -5,7 +5,6 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -17,9 +16,10 @@ import com.nimbusds.jwt.SignedJWT;
 @Component
 @RequiredArgsConstructor
 public class TokenUtils {
-    @Value("${jwt.signerKey}")
-    private String SIGNER_KEY;
-
+    private String signerKey;
+    public TokenUtils (String signerKey) {
+        this.signerKey = signerKey;
+    }
 
     public String getUserIdByToken(String token) throws ParseException {
         SignedJWT signedJWT;
@@ -40,7 +40,7 @@ public class TokenUtils {
             throw new IllegalArgumentException("Token không hợp lệ");
         }
 
-        JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
+        JWSVerifier verifier = new MACVerifier(signerKey.getBytes());
         boolean verified = signedJWT.verify(verifier);
 
         if (!verified) {
@@ -57,7 +57,7 @@ public class TokenUtils {
 
 
     public boolean checkToken(String token) throws JOSEException, ParseException {
-        JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
+        JWSVerifier verifier = new MACVerifier(signerKey.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
         Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
         boolean verified = signedJWT.verify(verifier);
@@ -77,7 +77,7 @@ public class TokenUtils {
                 .build();
 
         JWSObject jwsObject = new JWSObject(jwsHeader, new Payload(jwtClaimsSet.toJSONObject()));
-        jwsObject.sign(new MACSigner(SIGNER_KEY.getBytes()));
+        jwsObject.sign(new MACSigner(signerKey.getBytes()));
         String token =  jwsObject.serialize();
         return token;
     }
