@@ -30,7 +30,7 @@ public class TokenUtils {
     }
 
 
-    public boolean checkToken(String token) throws JOSEException, ParseException {
+    public boolean isValidToken(String token) throws JOSEException, ParseException {
         JWSVerifier verifier = new MACVerifier(signerKey.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
         Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
