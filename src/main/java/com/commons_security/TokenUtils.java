@@ -1,11 +1,9 @@
-package com.utils.token;
+package com.commons_security;
 
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.time.Instant;
