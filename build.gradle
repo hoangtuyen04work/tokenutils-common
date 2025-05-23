@@ -5,11 +5,15 @@ plugins {
 	id 'maven-publish' // Add this line to enable maven-publish
 }
 
-group = 'com.utils'
+group = 'com.commons-security'
 version = '0.0.1-SNAPSHOT'
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_21 // Or your Java version
+}
+
+bootJar {
+	enabled = false
 }
 
 repositories {
@@ -17,13 +21,14 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework:spring-core'
+	implementation 'org.springframework:spring-context'
+//	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'com.nimbusds:nimbus-jose-jwt:9.37'
 	compileOnly 'org.projectlombok:lombok:1.18.34'
 	annotationProcessor 'org.projectlombok:lombok:1.18.34'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
@@ -34,8 +39,8 @@ tasks.named('test') {
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			groupId = 'com.utils'
-			artifactId = 'token-utils' // Unique name for your JAR
+			groupId = 'com.commons-security'
+			artifactId = 'commons-security' // Unique name for your JAR
 			version = '0.0.6-SNAPSHOT'
 			from components.java // Publishes the compiled Java classes
 
